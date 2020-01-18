@@ -15,9 +15,7 @@ import smtplib
 
 import subprocess
 
-from email.MIMEMultipart import MIMEMultipart
-from email.MIMEText import MIMEText
-from email.MIMEImage import MIMEImage
+from email.message import EmailMessage
 
 confdir = os.path.join(os.environ.get('HOME'), '.twema')
 if not os.path.isdir(confdir):
@@ -106,15 +104,11 @@ def normws(text):
     return u' '.join(text.split())
 
 def compose_msg(tweet):
-    root = MIMEMultipart('related')
-    root['Subject'] = normws(u'@'+tweet[u'user'][u'screen_name']+u': '+tweet[u'text'])
-    root['To'] = TO
-    root.preamble = 'This is a multi-part message in MIME format.'
+    msg = EmailMessage()
+    msg['Subject'] = normws(u'@'+tweet[u'user'][u'screen_name']+u': '+tweet[u'text'])
+    msg['To'] = TO
 
-    alt = MIMEMultipart('alternative')
-    root.attach(alt)
-
-    text = MIMEText((u'''%(name)s @%(screen_name)s %(date)s
+    msg.set_content('''%(name)s @%(screen_name)s %(date)s
 
 %(text)s
 
@@ -127,14 +121,13 @@ Favorite: https://twitter.com/intent/favorite?tweet_id=%(id)s
        u'name': tweet[u'user'][u'name'],
        u'text': tweet[u'text'],
        u'date': parse_twitter_timestamp(tweet[u'created_at']).strftime('%d.%m.%Y %H:%M:%S'),
-       u'id': tweet[u'id']}).encode('UTF-8'), 'plain', 'utf-8')
-    alt.attach(text)
-    return root
+       u'id': tweet[u'id']}, subtype='plain')
+    return msg
 
 def send_tweet(tweet):
     msg = compose_msg(tweet)
     p = subprocess.Popen(['/usr/sbin/sendmail', '-t', '-oi', '-f', FROM, '-F', FROM_NAME], stdin=subprocess.PIPE)
-    p.communicate(msg.as_string())
+    p.communicate(bytes(msg))
     return p.returncode == 0
 
 def send_tweets():
