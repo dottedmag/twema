@@ -41,7 +41,7 @@ def prepare_schema():
 prepare_schema()
 
 def save_tweet(content):
-    db.execute('INSERT INTO tweets (id, content) VALUES (?, ?)', (content[u'id'], json.dumps(content)))
+    db.execute('INSERT INTO tweets (id, content) VALUES (?, ?)', (content['id'], json.dumps(content)))
     db.commit()
 
 def get_latest_saved_id():
@@ -62,7 +62,7 @@ def get_tweets_after(twitter, _id):
     tl.debug('Obtained '+str(len(statuses))+' tweets')
     while len(statuses):
         sts.extend(statuses)
-        least_id = min(statuses, key=lambda s: s[u'id'])[u'id']
+        least_id = min(statuses, key=lambda s: s['id'])['id']
         statuses = twitter.statuses.home_timeline(count=200, since_id=_id, max_id=least_id-1, tweet_mode='extended')
         tl.debug('Obtained '+str(len(statuses))+' tweets')
     return sts
@@ -89,7 +89,7 @@ def refresh_tweets():
         tweets = get_latest_tweets(twitter)
 
     for tweet in tweets:
-        tl.info('Saving tweet '+str(tweet[u'id'])+' into DB')
+        tl.info('Saving tweet '+str(tweet['id'])+' into DB')
         save_tweet(tweet)
 
 def print_mentions():
@@ -101,11 +101,11 @@ def parse_twitter_timestamp(stamp):
     return datetime.datetime.strptime(stamp, '%a %b %d %H:%M:%S +0000 %Y')
 
 def normws(text):
-    return u' '.join(text.split())
+    return ' '.join(text.split())
 
 def compose_msg(tweet):
     msg = EmailMessage()
-    msg['Subject'] = normws(u'@'+tweet[u'user'][u'screen_name']+u': '+tweet[u'full_text'])
+    msg['Subject'] = normws('@'+tweet['user']['screen_name']+': '+tweet['full_text'])
     msg['To'] = TO
 
     msg.set_content('''%(name)s @%(screen_name)s %(date)s
@@ -117,11 +117,11 @@ User: https://twitter.com/%(screen_name)s
 Reply: https://twitter.com/intent/tweet?in_reply_to=%(id)s
 Retweet: https://twitter.com/intent/retweet?tweet_id=%(id)s
 Favorite: https://twitter.com/intent/favorite?tweet_id=%(id)s
-''' % {u'screen_name': tweet[u'user'][u'screen_name'],
-       u'name': tweet[u'user'][u'name'],
-       u'text': tweet[u'text'],
-       u'date': parse_twitter_timestamp(tweet[u'created_at']).strftime('%d.%m.%Y %H:%M:%S'),
-       u'id': tweet[u'id']}, subtype='plain')
+''' % {'screen_name': tweet['user']['screen_name'],
+       'name': tweet['user']['name'],
+       'text': tweet['text'],
+       'date': parse_twitter_timestamp(tweet['created_at']).strftime('%d.%m.%Y %H:%M:%S'),
+       'id': tweet['id']}, subtype='plain')
     return msg
 
 def send_tweet(tweet):
