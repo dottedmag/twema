@@ -63,12 +63,12 @@ def get_tweets_after(twitter, _id):
     while len(statuses):
         sts.extend(statuses)
         least_id = min(statuses, key=lambda s: s[u'id'])[u'id']
-        statuses = twitter.statuses.home_timeline(count=200, since_id=_id, max_id=least_id-1)
+        statuses = twitter.statuses.home_timeline(count=200, since_id=_id, max_id=least_id-1, tweet_mode='extended')
         tl.debug('Obtained '+str(len(statuses))+' tweets')
     return sts
 
 def get_latest_tweets(twitter):
-    return twitter.statuses.home_timeline(count=10)
+    return twitter.statuses.home_timeline(count=10, tweet_mode='extended')
 
 def connect_twitter():
     tl.debug('Connecting to Twitter')
@@ -105,7 +105,7 @@ def normws(text):
 
 def compose_msg(tweet):
     msg = EmailMessage()
-    msg['Subject'] = normws(u'@'+tweet[u'user'][u'screen_name']+u': '+tweet[u'text'])
+    msg['Subject'] = normws(u'@'+tweet[u'user'][u'screen_name']+u': '+tweet[u'full_text'])
     msg['To'] = TO
 
     msg.set_content('''%(name)s @%(screen_name)s %(date)s
