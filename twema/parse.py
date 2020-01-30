@@ -88,15 +88,9 @@ class Text:
         out = ""
         for chunk in self.chunks:
             if chunk.kind == ChunkKind.TEXT:
-                out += html.escape(self.text[chunk.begin : chunk.end])
+                out += self.text[chunk.begin : chunk.end]
             elif chunk.kind == ChunkKind.LINK:
-                out += (
-                    '<a href="'
-                    + chunk.link
-                    + '">'
-                    + html.escape(chunk.text)
-                    + "</a>"
-                )
+                out += '<a href="' + chunk.link + '">' + chunk.text + "</a>"
         return out
 
 
