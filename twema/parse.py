@@ -194,6 +194,14 @@ def _parse_tweet(tweet):
                 url["expanded_url"],
             )
 
+    for mention in tweet.get("entities").get("user_mentions"):
+        text.link(
+            mention["indices"][0],
+            mention["indices"][1],
+            "@" + mention["screen_name"],
+            "https://twitter.com/" + mention["screen_name"],
+        )
+
     reply_id = tweet.get("in_reply_to_status_id_str")
     reply_author = tweet.get("in_reply_to_screen_name")
 
