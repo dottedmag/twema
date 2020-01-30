@@ -100,13 +100,17 @@ class MediaType(enum.Enum):
     GIF = 2
 
 
-def str_to_media_type(s):
-    if s == "photo":
-        return MediaType.PHOTO
-    if s == "video":
+def media_type(m):
+    if (
+        m["type"] == "video"
+        or "video_info" in m
+        or "additional_media_info" in m
+    ):
         return MediaType.VIDEO
-    if s == "animated_gif":
+    if m["type"] == "animated_gif":
         return MediaType.GIF
+    if m["type"] == "photo":
+        return MediaType.PHOTO
     raise SyntaxError("Don't know how to handle " + s)
 
 
@@ -152,11 +156,12 @@ def _parse_tweet(tweet):
 
     media = []
     for m in entities["media"] if entities and "media" in entities else []:
-        if m["type"] == "video" or m["type"] == "animated_gif":
+        mt = media_type(m)
+        if mt == MediaType.VIDEO or mt == MediaType.GIF:
             media_url = m["expanded_url"]
         else:
             media_url = m["media_url_https"]
-        media.append(Media(media_url, str_to_media_type(m["type"])))
+        media.append(Media(media_url, mt))
 
         assert len(m["indices"]) == 2
         medium_from = m["indices"][0]
