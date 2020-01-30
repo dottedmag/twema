@@ -1,3 +1,9 @@
+#
+# © 2020 Mikhail Gusarov <dottedmag@dottedmag.net>
+#
+# This file is a part of twema and licensed under AGPLv3. See doc/COPYING at the
+# root of the repository for the details.
+#
 from setuptools import setup
 
 setup(
