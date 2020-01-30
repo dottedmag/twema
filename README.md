@@ -2,17 +2,19 @@
 
 Twema is a Twitter to e-mail gateway. It has the following features:
 
-* Send tweets from home timeline
-* TODO Send messages from a Twitter thread as a single message
-* TODO Show media inline
+* Sends tweets from a home timeline
+* Sends messages from a Twitter thread as a single message
+* Shows pictures inline
 
-# Installation
+# Installation & configuration
 
-```
-$ pip install twema
-```
-
-<TODO register app, obtain keys>
+* Install the tool (e.g. `pip install twema`)
+* Configure local mail server to accept mail via `/usr/sbin/sendmail`
+* Copy [example config](docs/config.toml.example) to `$HOME/.config/twema/config.toml`
+* Fill in `mail.from` and `mail.to` values
+* [Register an app](https://developer.twitter.com/en/docs/basics/apps/overview)
+* Fill in `app.consumer_key` and `app.consumer_secret` values
+* Run `twema fetch` and follow instructions to authenticate to Twitter
 
 # Usage
 
