@@ -10,6 +10,7 @@ setup(
     license="AGPLv3",
     packages=["twema"],
     entry_points={"console_scripts": ["twema=twema.cli:main"],},
+    include_package_data=True,
     install_requires=[
         "Jinja2==2.11.0",
         "toml==0.10.0",
