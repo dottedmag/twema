@@ -8,7 +8,7 @@ from setuptools import setup
 
 setup(
     name="twema",
-    version="0.0.1",
+    version="0.5.0",
     description="Twitter-to-email gateway",
     url="https://github.com/dottedmag/twema",
     author="Mikhail Gusarov",
