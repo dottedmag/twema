@@ -32,7 +32,7 @@ def send(config):
     threads = parse.parse_tweets(raw_tweets)
 
     for thread in threads:
-        msg = formatting.thread_html(config, thread)
+        msg = formatting.thread_email(config, thread)
         if mail.send(config, msg):
             db.mark_tweets_as_sent(d, parse.tweet_ids(thread))
 
