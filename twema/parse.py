@@ -163,17 +163,6 @@ def _parse_tweet(tweet):
         medium_to = m["indices"][1]
         text.hide(medium_from, medium_to)
 
-    for url in entities["urls"] if entities and "urls" in entities else []:
-        if url["expanded_url"] == quote_url:
-            text.hide(url["indices"][0], url["indices"][1])
-        else:
-            text.link(
-                url["indices"][0],
-                url["indices"][1],
-                url["display_url"],
-                url["expanded_url"],
-            )
-
     retweet = None
     if "retweeted_status" in tweet:
         retweet = _parse_tweet(tweet["retweeted_status"])
@@ -188,6 +177,17 @@ def _parse_tweet(tweet):
         else:
             # No quote, treat as a link
             pass
+
+    for url in entities["urls"] if entities and "urls" in entities else []:
+        if url["expanded_url"] == quote_url:
+            text.hide(url["indices"][0], url["indices"][1])
+        else:
+            text.link(
+                url["indices"][0],
+                url["indices"][1],
+                url["display_url"],
+                url["expanded_url"],
+            )
 
     reply_id = tweet.get("in_reply_to_status_id")
     reply_author = tweet.get("in_reply_to_screen_name")
