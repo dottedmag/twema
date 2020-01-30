@@ -171,7 +171,6 @@ def _parse_tweet(tweet):
     retweet = None
     if "retweeted_status" in tweet:
         retweet = _parse_tweet(tweet["retweeted_status"])
-        text.hide_all()
         media = []
 
     quote, quote_url = None, None
@@ -201,6 +200,9 @@ def _parse_tweet(tweet):
             "@" + mention["screen_name"],
             "https://twitter.com/" + mention["screen_name"],
         )
+
+    if retweet is not None:
+        text.hide_all()
 
     reply_id = tweet.get("in_reply_to_status_id_str")
     reply_author = tweet.get("in_reply_to_screen_name")
