@@ -178,7 +178,7 @@ def _parse_tweet(tweet):
             # No quote, treat as a link
             pass
 
-    for url in entities["urls"] if entities and "urls" in entities else []:
+    for url in tweet.get("entities", {}).get("urls", {}):
         if url["expanded_url"] == quote_url:
             text.hide(url["indices"][0], url["indices"][1])
         else:
