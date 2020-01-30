@@ -139,7 +139,7 @@ def parse_tweet(tweet):
 
 
 def _parse_tweet(tweet):
-    id = tweet["id"]
+    id = tweet["id_str"]
     author = ParsedUser(
         name=tweet["user"]["name"],
         atname="@" + tweet["user"]["screen_name"],
@@ -194,7 +194,7 @@ def _parse_tweet(tweet):
                 url["expanded_url"],
             )
 
-    reply_id = tweet.get("in_reply_to_status_id")
+    reply_id = tweet.get("in_reply_to_status_id_str")
     reply_author = tweet.get("in_reply_to_screen_name")
 
     reply = None
