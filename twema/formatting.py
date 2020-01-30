@@ -45,18 +45,20 @@ thread_template = jenv.get_template("thread.jinja")
 
 
 def thread_html(config, thread):
-    msg = EmailMessage()
-    msg["Subject"] = format_subject(thread)
-    msg["From"] = config["mail"]["from"]
-    msg["To"] = config["mail"]["to"]
-
-    h = thread_template.render(
+    return thread_template.render(
         thread=thread,
         is_video=lambda media: media.type == parse.MediaType.VIDEO,
         have_tweet=parse.have_tweet,
     )
 
+
+def thread_email(config, thread):
+    msg = EmailMessage()
+    msg["Subject"] = format_subject(thread)
+    msg["From"] = config["mail"]["from"]
+    msg["To"] = config["mail"]["to"]
+
     msg.set_content("See HTML version")
-    msg.add_alternative(h, subtype="html")
+    msg.add_alternative(thread_html(config, thread), subtype="html")
 
     return bytes(msg)

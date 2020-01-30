@@ -19,7 +19,9 @@ def main():
     parser.add_argument(
         "--verbose", help="enable verbose output", action="store_true"
     )
-    parser.add_argument("--id", help="ID of tweet to render")
+    parser.add_argument(
+        "--id", help="comma-separated IDs of tweet to render or 'all'"
+    )
     args = parser.parse_args()
 
     c = config.load()
@@ -28,10 +30,12 @@ def main():
         twema.fetch(c)
     elif args.command == "send":
         twema.send(c)
-    elif args.command == "render":  # debugging commands
-        twema.render(c, args.id)
-    elif args.command == "print":
-        twema.cmd_print(c, args.id)
+    elif args.command == "render-email":  # debugging commands
+        twema.render_email(c, args.id)
+    elif args.command == "render-html":
+        twema.render_html(c, args.id)
+    elif args.command == "print-raw":
+        twema.print_raw(c, args.id)
     elif args.command == "list":
         twema.list(c)
     else:
