@@ -52,8 +52,8 @@
     <div class="thread">
       {% for tweet in thread.tweets %}
         {{ render_tweet(tweet, thread) }}
+        <hr>
       {% endfor %}
-      <hr>
     </div>
   </body>
 </html>
