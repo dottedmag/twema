@@ -152,21 +152,6 @@ def _parse_tweet(tweet):
     )
     text = Text(tweet["full_text"])
 
-    retweet = None
-    if "retweeted_status" in tweet:
-        rs = tweet["retweeted_status"]
-        retweet = _parse_tweet(rs)
-        text.hide_all()
-
-    quote, quote_url = None, None
-    if retweet is None and tweet["is_quote_status"]:
-        if "quoted_status" in tweet:
-            quote = _parse_tweet(tweet["quoted_status"])
-            quote_url = tweet["quoted_status_permalink"]["expanded"]
-        else:
-            # No quote, treat as a link
-            pass
-
     entities = tweet.get("extended_entities")
     if entities is None:
         entities = tweet.get("entities")
@@ -195,12 +180,20 @@ def _parse_tweet(tweet):
                 url["expanded_url"],
             )
 
-    url = (
-        "https://twitter.com/"
-        + tweet["user"]["screen_name"]
-        + "/status/"
-        + str(id)
-    )
+    retweet = None
+    if "retweeted_status" in tweet:
+        retweet = _parse_tweet(tweet["retweeted_status"])
+        text.hide_all()
+        media = []
+
+    quote, quote_url = None, None
+    if retweet is None and tweet["is_quote_status"]:
+        if "quoted_status" in tweet:
+            quote = _parse_tweet(tweet["quoted_status"])
+            quote_url = tweet["quoted_status_permalink"]["expanded"]
+        else:
+            # No quote, treat as a link
+            pass
 
     reply_id = tweet.get("in_reply_to_status_id")
     reply_author = tweet.get("in_reply_to_screen_name")
@@ -211,6 +204,13 @@ def _parse_tweet(tweet):
             reply_id,
             "https://twitter.com/" + reply_author + "/status/" + str(reply_id),
         )
+
+    url = (
+        "https://twitter.com/"
+        + tweet["user"]["screen_name"]
+        + "/status/"
+        + str(id)
+    )
 
     return ParsedTweet(
         id, url, author, text, date, quote, retweet, reply, media
