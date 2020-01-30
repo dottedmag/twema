@@ -152,7 +152,7 @@ def _parse_tweet(tweet):
 
     media = []
     for m in entities["media"] if entities and "media" in entities else []:
-        if m["type"] == "video":
+        if m["type"] == "video" or m["type"] == "animated_gif":
             media_url = m["expanded_url"]
         else:
             media_url = m["media_url_https"]

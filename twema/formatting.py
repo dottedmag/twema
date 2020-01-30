@@ -47,7 +47,7 @@ thread_template = jenv.get_template("thread.jinja")
 def thread_html(config, thread):
     return thread_template.render(
         thread=thread,
-        is_video=lambda media: media.type == parse.MediaType.VIDEO,
+        is_pic=lambda media: media.type == parse.MediaType.PHOTO,
         have_tweet=parse.have_tweet,
     )
 
