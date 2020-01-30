@@ -36,6 +36,8 @@ def main():
         twema.render_html(c, args.id)
     elif args.command == "print-raw":
         twema.print_raw(c, args.id)
+    elif args.command == "print-parsed-tweet":
+        twema.print_parsed_tweet(c, args.id)
     elif args.command == "list":
         twema.list(c)
     else:

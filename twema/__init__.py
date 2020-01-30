@@ -80,3 +80,10 @@ def list(config):
 def print_raw(config, id):
     d = db.open()
     print(db.get_tweet(d, id))
+
+
+def print_parsed_tweet(config, id):
+    d = db.open()
+    tweet = parse.parse_tweet(db.get_tweet(d, id))
+    print(tweet)
+    print(tweet.text)
