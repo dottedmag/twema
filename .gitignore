@@ -1,1 +1,4 @@
 /keys.py
+*.pyc
+__pycache__
+/twema.egg-info

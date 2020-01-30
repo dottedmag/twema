@@ -1,0 +1,59 @@
+{% macro render_tweet(tweet, thread) %}
+  <div class="tweet" id="{{ tweet.id }}">
+    <div class="author">
+      {{ tweet.author.name }}
+      <a href="{{ tweet.author.url }}">{{ tweet.author.atname }}</a>
+    </div>
+    <div class="tweet_text">
+      {{ tweet.text.html() }}
+    </div>
+    {% if tweet.media|length > 0 %}
+      <div class="media">
+        {% for media in tweet.media %}
+          {% if is_video(media) %}
+            <a href="{{ media.url }}">video</a>
+          {% else %}
+            <img src="{{ media.url }}">
+          {% endif %}
+        {% endfor %}
+      </div>
+    {% endif %}
+    {% if tweet.retweet %}
+      <div class="retweet">RT
+      {% if have_tweet(tweet.retweet.id, thread) %}
+        <a href="#{{ tweet.retweet.id }}">☝☝☝</a>
+      {% else %}
+        {{ render_tweet(tweet.retweet, thread) }}
+      {% endif %}
+      </div>
+    {% endif %}
+    {% if tweet.quote %}
+      <div class="quote">
+      {% if have_tweet(tweet.quote.id, thread) %}
+        <a href="#{{ tweet.quote.id }}">☝☝☝</a>
+      {% else %}
+        {{ render_tweet(tweet.quote, thread) }}
+      {% endif %}
+      </div>
+    {% endif %}
+    <div class="tweet-id">
+      <a href="{{ tweet.url }}">{{ tweet.date }}</a>
+    </div>
+  </div>
+{% endmacro %}
+<html>
+  <head>
+    <style>
+      .retweet { margin-left: 50px; }
+      .quote { margin-left: 50px; }
+    </style>
+  </head>
+  <body>
+    <div class="thread">
+      {% for tweet in thread.tweets %}
+        {{ render_tweet(tweet, thread) }}
+      {% endfor %}
+      <hr>
+    </div>
+  </body>
+</html>

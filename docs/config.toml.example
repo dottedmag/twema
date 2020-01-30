@@ -1,0 +1,13 @@
+# -*- mode: toml -*-
+
+[mail]
+
+# The following values need to be specified
+from = "Twema <twema@example.org>"
+to = "Example Example <example@example.org>"
+
+[app]
+
+# Obtain the following values by registering the application with Twitter
+consumer_key = "ZZZZZZZZZZZZZZZZZZZZZZZZZ"
+consumer_secret = "YYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYYY"
