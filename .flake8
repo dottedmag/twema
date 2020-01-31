@@ -1,0 +1,6 @@
+[flake8]
+max_line_length=80
+# conflicts with black
+ignore=E203,W503
+
+exclude=build

@@ -8,7 +8,6 @@ import enum
 import datetime
 from collections import namedtuple
 import json
-import html
 
 
 def quote_url(tweet, url):
@@ -111,7 +110,7 @@ def media_type(m):
         return MediaType.GIF
     if m["type"] == "photo":
         return MediaType.PHOTO
-    raise SyntaxError("Don't know how to handle " + s)
+    raise SyntaxError("Don't know how to handle " + m["type"])
 
 
 Media = namedtuple("Media", ["url", "type"])

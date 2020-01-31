@@ -4,7 +4,6 @@
 # This file is a part of twema and licensed under AGPLv3. See doc/COPYING at the
 # root of the repository for the details.
 #
-from collections import namedtuple
 from email.message import EmailMessage
 
 from jinja2 import Environment, select_autoescape, PackageLoader

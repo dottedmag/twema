@@ -4,7 +4,6 @@
 # This file is a part of twema and licensed under AGPLv3. See doc/COPYING at the
 # root of the repository for the details.
 #
-import pathlib
 import sys
 import os.path
 
@@ -19,7 +18,7 @@ tweets_db_path = xdg.XDG_DATA_HOME / "twema" / "tweets.db"
 def _load():
     try:
         return toml.load(config_file_path)
-    except FileNotFoundError as e:
+    except FileNotFoundError:
         return {}
 
 
