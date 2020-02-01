@@ -6,26 +6,8 @@
 #}
 {% macro render_tweet(tweet, thread) %}
   <div class="tweet" id="{{ tweet.id }}">
-    <div class="author">
-      {{ tweet.author.name }}
-      <a href="{{ tweet.author.url }}">{{ tweet.author.atname }}</a>
-    </div>
-    <div class="tweet_text">
-      {{ tweet.text.html() }}
-    </div>
-    {% if tweet.media|length > 0 %}
-      <div class="media">
-        {% for media in tweet.media %}
-          {% if is_pic(media) %}
-            <img src="{{ media.url }}">
-          {% else %}
-            <a href="{{ media.url }}">video</a>
-          {% endif %}
-        {% endfor %}
-      </div>
-    {% endif %}
     {% if tweet.retweet %}
-      <div class="retweet">RT
+      <div class="retweet">
       {% if have_tweet(tweet.retweet.id, thread) %}
         <a href="#{{ tweet.retweet.id }}">☝☝☝</a>
       {% else %}
@@ -40,6 +22,28 @@
       {% else %}
         {{ render_tweet(tweet.quote, thread) }}
       {% endif %}
+      </div>
+    {% endif %}
+    <div class="author">
+      {{ tweet.author.name }}
+      <a href="{{ tweet.author.url }}">{{ tweet.author.atname }}</a>
+    </div>
+    <div class="tweet_text">
+      {% if tweet.retweet %}
+        RT
+      {% else %}
+        {{ tweet.text.html() }}
+      {% endif %}
+    </div>
+    {% if tweet.media|length > 0 %}
+      <div class="media">
+        {% for media in tweet.media %}
+          {% if is_pic(media) %}
+            <img src="{{ media.url }}">
+          {% else %}
+            <a href="{{ media.url }}">video</a>
+          {% endif %}
+        {% endfor %}
       </div>
     {% endif %}
     <div class="tweet-id">
