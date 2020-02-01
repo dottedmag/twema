@@ -24,9 +24,10 @@
       {% endif %}
       </div>
     {% endif %}
-    <div class="author">
+    <div class="header">
       {{ tweet.author.name }}
       <a href="{{ tweet.author.url }}">{{ tweet.author.atname }}</a>
+      <a href="{{ tweet.url }}">{{ tweet.date }}</a>
     </div>
     <div class="tweet_text">
       {% if tweet.retweet %}
@@ -46,9 +47,6 @@
         {% endfor %}
       </div>
     {% endif %}
-    <div class="tweet-id">
-      <a href="{{ tweet.url }}">{{ tweet.date }}</a>
-    </div>
   </div>
 {% endmacro %}
 <html>
