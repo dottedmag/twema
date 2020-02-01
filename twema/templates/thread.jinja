@@ -27,33 +27,44 @@
     <div class="header">
       {{ tweet.author.name }}
       <a href="{{ tweet.author.url }}">{{ tweet.author.atname }}</a>
-      <a href="{{ tweet.url }}">{{ tweet.date }}</a>
+      <a href="{{ tweet.url }}" class="tweet_date">{{ tweet.date }}</a>
     </div>
-    <div class="tweet_text">
-      {% if tweet.retweet %}
-        RT
-      {% else %}
-        {{ tweet.text.html() }}
+    <div class="tweet_content">
+      <div class="tweet_text">
+        {% if tweet.retweet %}
+          RT
+        {% else %}
+          {{ tweet.text.html() }}
+        {% endif %}
+      </div>
+      {% if tweet.media|length > 0 %}
+        <div class="media">
+          {% for media in tweet.media %}
+            {% if is_pic(media) %}
+              <img src="{{ media.url }}">
+            {% else %}
+              <a href="{{ media.url }}">video</a>
+            {% endif %}
+          {% endfor %}
+        </div>
       {% endif %}
     </div>
-    {% if tweet.media|length > 0 %}
-      <div class="media">
-        {% for media in tweet.media %}
-          {% if is_pic(media) %}
-            <img src="{{ media.url }}">
-          {% else %}
-            <a href="{{ media.url }}">video</a>
-          {% endif %}
-        {% endfor %}
-      </div>
-    {% endif %}
   </div>
 {% endmacro %}
 <html>
   <head>
     <style>
-      .retweet { margin-left: 50px; }
+      * { font-family: sans-serif; }
+      .retweet { margin-left: 50px; margin-bottom: 20px; }
       .quote { margin-left: 50px; }
+      .header {
+        margin-bottom: 10px;
+      }
+      a {
+        color: #656565;
+      }
+      .tweet_date { font-size: 50%; }
+      .tweet_content { margin-left: 5px; }
     </style>
   </head>
   <body>
