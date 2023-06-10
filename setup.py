@@ -8,7 +8,7 @@ from setuptools import setup
 
 setup(
     name="twema",
-    version="0.5.1",
+    version="0.5.2",
     description="Twitter-to-email gateway",
     url="https://github.com/dottedmag/twema",
     author="Mikhail Gusarov",
@@ -18,7 +18,7 @@ setup(
     entry_points={"console_scripts": ["twema=twema.cli:main"]},
     include_package_data=True,
     install_requires=[
-        "Jinja2==2.11.0",
+        "Jinja2==3.1.2",
         "toml==0.10.0",
         "twitter==1.18.0",
         "xdg==4.0.1",
