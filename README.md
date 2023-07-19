@@ -14,6 +14,7 @@ Twema is a Twitter to e-mail gateway. It has the following features:
 * Fill in `mail.from` and `mail.to` values
 * [Register an app](https://developer.twitter.com/en/docs/basics/apps/overview)
 * Fill in `app.consumer_key` and `app.consumer_secret` values
+* Make a sacrifice to Musk by upgrading to a tier that allows you to consume `home_timeline.json` API endpoint.
 * Run `twema fetch` and follow instructions to authenticate to Twitter
 
 # Usage
