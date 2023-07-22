@@ -6,6 +6,12 @@ Twema is a Twitter to e-mail gateway. It has the following features:
 * Sends messages from a Twitter thread as a single message
 * Shows pictures inline
 
+# API price
+
+Twitter now restricts access to the `home_timeline.json` API endpoint and requires one to pay $100/month for it.
+
+Instead head over to a nearby Nitter instance and grab feeds for all Twitter accounts you'd like to read.
+
 # Installation & configuration
 
 * Install the tool (e.g. `pip install twema`)
