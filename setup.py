@@ -18,7 +18,7 @@ setup(
     entry_points={"console_scripts": ["twema=twema.cli:main"]},
     include_package_data=True,
     install_requires=[
-        "Jinja2==3.1.2",
+        "Jinja2==3.1.3",
         "toml==0.10.0",
         "twitter==1.18.0",
         "xdg==4.0.1",
